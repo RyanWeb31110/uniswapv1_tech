@@ -459,6 +459,7 @@ function testReverseSlippage() public {
 
 ## 📚 项目仓库
 
-完整项目代码请访问：[https://github.com/RyanWeb31110/uniswapv1_tech](https://github.com/RyanWeb31110/uniswapv1_tech)
+完整项目代码请访问：
+[https://github.com/RyanWeb31110/uniswapv1_tech](https://github.com/RyanWeb31110/uniswapv1_tech)
 
 本系列文章是基于该项目的完整教学实现，欢迎克隆代码进行实践学习！

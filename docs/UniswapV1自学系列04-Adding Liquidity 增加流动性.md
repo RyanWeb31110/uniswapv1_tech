@@ -1,6 +1,6 @@
 # UniswapV1 自学系列04：增加流动性 (Adding Liquidity)
 
-> 本系列文章将带您从零构建一个 UniswapV1 去中心化交易所，深入理解 AMM（自动做市商）机制的核心原理。
+本系列文章将带您从零构建一个 UniswapV1 去中心化交易所，深入理解 AMM（自动做市商）机制的核心原理。
 
 ## 1. 流动性管理的重要性
 
@@ -343,6 +343,7 @@ function addLiquidity(uint256 _tokenAmount) public payable nonReentrant {
 
 ## 📚 项目仓库
 
-完整项目代码请访问：[https://github.com/RyanWeb31110/uniswapv1_tech](https://github.com/RyanWeb31110/uniswapv1_tech)
+完整项目代码请访问：
+[https://github.com/RyanWeb31110/uniswapv1_tech](https://github.com/RyanWeb31110/uniswapv1_tech)
 
 本系列文章是基于该项目的完整教学实现，欢迎克隆代码进行实践学习！

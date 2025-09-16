@@ -22,4 +22,13 @@ contract Token is ERC20 {
         // 将所有初始供应量铸造给合约部署者
         _mint(msg.sender, initialSupply);
     }
+
+    /**
+     * @dev 铸造新代币
+     * @param to 接收代币的地址
+     * @param amount 铸造数量
+     */
+    function mint(address to, uint256 amount) external {
+        _mint(to, amount);
+    }
 }

@@ -384,4 +384,54 @@ contract ExchangeTest is Test {
         vm.stopPrank();
     }
 
+    /**
+     * @notice 测试手续费收取功能
+     */
+    function testFees() public {
+        // 添加初始流动性（不能提前转代币到合约）
+        token.approve(address(exchange), 2000 ether);
+        exchange.addLiquidity{value: 1000 ether}(2000 ether);
+
+        // 记录交换前的储备
+        uint256 ethReserveBefore = address(exchange).balance;
+        uint256 tokenReserveBefore = token.balanceOf(address(exchange));
+
+        // 切换到用户身份执行交换
+        vm.startPrank(user);
+
+        // 用户批准代币给交易所
+        uint256 tokenAmount = 100 ether;
+        token.approve(address(exchange), tokenAmount);
+
+        // 记录用户交换前的 ETH 余额
+        uint256 userEthBefore = user.balance;
+
+        // 执行代币到 ETH 的交换
+        exchange.tokenToEthSwap(tokenAmount, 1);
+
+        // 计算用户实际收到的 ETH
+        uint256 ethReceived = user.balance - userEthBefore;
+
+        vm.stopPrank();
+
+        // 记录交换后的储备
+        uint256 ethReserveAfter = address(exchange).balance;
+        uint256 tokenReserveAfter = token.balanceOf(address(exchange));
+
+        // 验证手续费机制
+        // ETH储备：应该精确等于初始储备减去用户收到的ETH
+        assertEq(ethReserveAfter, ethReserveBefore - ethReceived);
+
+        // Token储备：应该等于初始储备加上用户支付的token
+        assertEq(tokenReserveAfter, tokenReserveBefore + tokenAmount);
+
+        // 验证用户确实收到了ETH（并且由于1%手续费，收到的应该少于无手续费情况）
+        assertTrue(ethReceived > 0);
+
+        // 计算无手续费情况下应该收到的ETH
+        uint256 ethWithoutFee = (tokenAmount * ethReserveBefore) / tokenReserveBefore;
+
+        // 验证由于手续费，实际收到的ETH少于理论值
+        assertTrue(ethReceived < ethWithoutFee);
+    }
 }
